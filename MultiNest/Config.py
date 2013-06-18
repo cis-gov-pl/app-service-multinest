@@ -38,6 +38,7 @@ class Config(dict):
         self.config_file = None  #: Config file name
         self.log_level = 'INFO'  #: Logging level
         self.log_output = None  #: Log output file name
+        self.gw_url = "http://app-gw.cis.gov.pl/api"
         #: Valid job states as well as names of directories on shared storage
         #: that are used to monitor job states
         self.service_states = (

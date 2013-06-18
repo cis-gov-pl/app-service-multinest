@@ -16,7 +16,8 @@ Released   : 20120307
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>CIŚ MultiNest Webservice</title>
-<link href="static/style.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"
+    type="text/css" media="screen" />
 <noscript>
     <meta http-equiv="Refresh" id="refresh" content="30"/>
 </noscript>
@@ -34,18 +35,20 @@ FirebugLite console.log
 </head>
 <body>
 <div id="wrapper">
-    <div id="splash"></div>
+    <div id="splash"><a href="http://www.cis.gov.pl">
+            <img alt="CIŚ" src="{{ url_for('static', filename='CIS.jpg') }}">
+    </a></div>
 	<div id="wrapper2">
 		<div id="header" class="container">
             <div id="logo">
-                <h1><a href="/">MultiNest</a></h1>
+                <h1><a href="{{ url_for('index') }}">MultiNest</a></h1>
             </div>
 			<div id="menu">
 				<ul>
-					<li><a href="/">Opis</a></li>
-					<li><a href="/submit">Dane wejściowe</a></li>
-					<li><a href="/monitor">Monitor obliczeń</a></li>
-					<li><a href="/output">Wyniki</a></li>
+                    <li><a href="{{ url_for('index') }}">Opis</a></li>
+                    <li><a href="{{ url_for('submit') }}">Dane wejściowe</a></li>
+                    <li><a href="{{ url_for('monitor') }}">Monitor obliczeń</a></li>
+                    <li><a href="{{ url_for('output') }}">Wyniki</a></li>
 				</ul>
             </div>
 		</div>
@@ -79,9 +82,9 @@ FirebugLite console.log
 <div id="footer-content">
 	<div id="footer">
     <div id="footer_line"></div>
-    <img height="109px" src="static/loga.jpg" width="980px" />
+    <img height="109px" src="{{ url_for('static', filename='loga.jpg') }}" width="980px" />
     <p> Projekt wspófinansowany ze środków Europejskiego Funduszu Rozwoju Regionalnego<br> w ramach Programu Operacyjnego Innowacyjna Gospodarka </p>
-    <p>Design by <a href="http://www.freecsstemplates.org">FCT</a> & CIŚ.</p>
+    <p>Design by <a href="http://www.freecsstemplates.org">FCT</a> & <a href="http://www.cis.gov.pl">CIŚ</a>.</p>
 </div>
 </div>
 <!-- end #footer -->

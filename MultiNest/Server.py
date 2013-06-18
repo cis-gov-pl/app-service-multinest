@@ -13,25 +13,26 @@ from logging import debug, error, warning
 
 logging.basicConfig(level=logging.DEBUG)
 
+gw_url = "http://app-gw.cis.gov.pl/api"
 
 def submit(payload):
     payload['service'] = "MultiNest"
-    url = "http://localhost:5000/submit"
+    url = gw_url + "/submit"
     headers = {'content-type': 'application/json'}
     try:
         r = requests.post(url, data=json.dumps(payload), headers=headers)
     except Exception as e:
         flask.flash(u"Brak połączenia z serwerem aplikacji: %s" % e, "error")
-        return flask.redirect('/')
+        return flask.redirect(flask.url_for('index'))
 
     if r.text.startswith('MultiNest'):
         flask.flash(u"Zadanie wysłane pomyślnie", "success")
-        resp = flask.make_response(flask.redirect('/monitor'))
+        resp = flask.make_response(flask.redirect(flask.url_for('monitor')))
         resp.set_cookie('CISMultiNestJobID', r.text)
         return resp
 
     flask.flash(r.text, "error")
-    return flask.redirect('/')
+    return flask.redirect(flask.url_for('index'))
 
 
 def status():
@@ -44,7 +45,7 @@ def status():
     )
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = "http://localhost:5000/status/" + _jid
+        url = gw_url + "/status/" + _jid
         r = requests.get(url)
         if \
             r.text.startswith('Waiting') or \
@@ -76,7 +77,7 @@ def progress():
     _result = {'job_output':'Waiting ...'}
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = "http://localhost:5000/progress/" + _jid
+        url = gw_url + "/progress/" + _jid
         r = requests.get(url)
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
@@ -91,11 +92,11 @@ def progress():
 def output():
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = "http://localhost:5000/output/" + _jid
+        url = gw_url + "/output/" + _jid
         r = requests.get(url)
         if r.text.startswith('Error'):
             flask.flash(r.text)
-            return flask.redirect('/')
+            return flask.redirect(flask.url_for('index'))
         else:
             debug(r.text)
             _state = status()
@@ -104,4 +105,4 @@ def output():
                                          state=_state)
 
     flask.flash(u"Brak zakończonego zadania: nie mogę wyświetlić wyników", "error")
-    return flask.redirect('/')
+    return flask.redirect(flask.url_for('index'))

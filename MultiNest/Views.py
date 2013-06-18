@@ -6,10 +6,8 @@ from flask import render_template, flash, redirect, request, url_for, jsonify,\
 from MultiNest import app, Server
 from Forms import SubmitForm
 
-# index view function suppressed for brevity
-
 @app.route('/')
-def hello():
+def index():
     _state = Server.status()
     return render_template('index.html', state=_state)
 

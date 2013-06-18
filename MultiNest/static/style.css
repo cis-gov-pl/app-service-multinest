@@ -67,7 +67,7 @@ a:hover {
 	height: 160px;
 	margin: 0;
 	padding: 0px 0px;
-	background: url(/static/bg_menu.gif) repeat-x 0px 20px;
+	background: url(bg_menu.gif) repeat-x 0px 20px;
 }
 
 /* Logo */
@@ -124,7 +124,9 @@ a:hover {
 	margin: 0px auto;
     height: 120px;
     padding: 0;
-	background: url(/static/CIS.jpg) no-repeat left top;
+/*    display: block;
+    text-indent: -9999px;
+	background: url(CIS.jpg) no-repeat left top;*/
 	float: center;
 }
 
@@ -174,7 +176,7 @@ a:hover {
 	height: 64px;
 	margin: 0 auto;
 	padding: 0px;
-	background: url(/static/bg_menu.gif) repeat-x 0px 20px;
+	background: url(bg_menu.gif) repeat-x 0px 20px;
 	display: block;
 }
 
@@ -460,7 +462,7 @@ a:hover {
 }
 
 #footer_line {
-    background: url("/static/bg_menu.gif") repeat scroll 0% 0% transparent;
+    background: url(bg_menu.gif) repeat scroll 0% 0% transparent;
     height: 5px;
     width: 100%;
 }
