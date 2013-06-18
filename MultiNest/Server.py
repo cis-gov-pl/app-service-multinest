@@ -13,14 +13,17 @@ from logging import debug, error, warning
 
 logging.basicConfig(level=logging.DEBUG)
 
-gw_url = "http://app-gw.cis.gov.pl/api"
+gw_url = "https://app-gw.cis.gov.pl/api"
 
 def submit(payload):
     payload['service'] = "MultiNest"
     url = gw_url + "/submit"
     headers = {'content-type': 'application/json'}
     try:
-        r = requests.post(url, data=json.dumps(payload), headers=headers)
+        # Set verify=False as we use self signed cert. With CA signed cert add
+        # cafile as value of the verify attribute
+        r = requests.post(url, data=json.dumps(payload), headers=headers,
+                          verify=False)
     except Exception as e:
         flask.flash(u"Brak połączenia z serwerem aplikacji: %s" % e, "error")
         return flask.redirect(flask.url_for('index'))
@@ -46,7 +49,7 @@ def status():
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
         url = gw_url + "/status/" + _jid
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         if \
             r.text.startswith('Waiting') or \
             r.text.startswith('Queued'):
@@ -78,7 +81,7 @@ def progress():
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
         url = gw_url + "/progress/" + _jid
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
         else:
@@ -93,7 +96,7 @@ def output():
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
         url = gw_url + "/output/" + _jid
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         if r.text.startswith('Error'):
             flask.flash(r.text)
             return flask.redirect(flask.url_for('index'))

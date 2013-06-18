@@ -21,17 +21,9 @@ Released   : 20120307
 <noscript>
     <meta http-equiv="Refresh" id="refresh" content="30"/>
 </noscript>
-<!--
-FirebugLite console.log
-<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js#startOpened"></script>
--->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-</script>
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
-<script type=text/javascript src="{{
-  url_for('static', filename='update_status.js') }}"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -88,5 +80,15 @@ FirebugLite console.log
 </div>
 </div>
 <!-- end #footer -->
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='update_status.js') }}"></script>
+<!--
+FirebugLite console.log
+<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js#startOpened"></script>
+-->
+{% block scripts %}
+{% endblock %}
 </body>
 </html>
