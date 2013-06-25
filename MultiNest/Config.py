@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
+"""
+Global configuration for MultiNest.
+"""
 
 import os
-try:
-    import json
-except:
-    import simplejson as json
+import json
 
 from logging import \
     debug, log
@@ -14,9 +14,9 @@ VERBOSE = 5
 
 class Config(dict):
     """
-    Global configuration for CISAppGateway.
+    Global configuration for MultiNest.
 
-    CISAppGateway.Config defines global instance of Config class: conf.
+    MultiNest.Config defines global instance of Config class: conf.
     Config stores variables as instace members e.g.:
         conf.config_file
     The variables are also accessible via dictionary interface e.g.:
@@ -38,48 +38,14 @@ class Config(dict):
         self.config_file = None  #: Config file name
         self.log_level = 'INFO'  #: Logging level
         self.log_output = None  #: Log output file name
-        self.gw_url = "http://app-gw.cis.gov.pl/api"
-        #: Valid job states as well as names of directories on shared storage
-        #: that are used to monitor job states
-        self.service_states = (
-            'waiting', 'queued', 'running',
-            'done', 'failed', 'aborted', 'killed',
-            'removed'
-        )
-        #: Supported services
-        self.allowed_services = ('Test', 'MultiNest')
-        #: Path to the shared storage used as communication medium with
-        #: AppServer
-        self.gate_path_shared = 'Queue'
-        #: Path where jobs output will be stored
-        self.gate_path_output = 'Output'
-        self.gate_path_jobs = None
-        self.gate_path_exit = None
-        self.gate_path_waiting = None
-        self.gate_path_queued = None
-        self.gate_path_running = None
-        self.gate_path_done = None
-        self.gate_path_failed = None
-        self.gate_path_aborted = None
-        self.gate_path_killed = None
-        self.gate_path_removed = None
-        self.gate_path = {
-            "waiting": None,
-            "queued": None,
-            "running": None,
-            "done": None,
-            "failed": None,
-            "aborted": None,
-            "killed": None,
-            "removed": None
-        }
+        self.gw_url = "http://localhost:5000"
 
     def load(self, conf_name=None):
         """
-        Load CISAppGateway configuration from JSON file and finalize the
+        Load MultiNest configuration from JSON file and finalize the
         initialisation.
 
-        :param conf_name: name of CISAppGateway config file. When *None* is
+        :param conf_name: name of MultiNest config file. When *None* is
             provided hardcoded defaults are used.
         """
 
@@ -96,32 +62,11 @@ class Config(dict):
         # Normalize paths to full versions
         for _key, _value in self.items():
             if '_path_' in _key and isinstance(_value, (str, unicode)):
-                log(VERBOSE,'@Config - Correct path to full one: %s -> %s.' %
-                      (_key, _value))
+                log(VERBOSE, '@Config - Correct path to full one: %s -> %s.' %
+                    (_key, _value))
                 self[_key] = os.path.realpath(_value)
 
         # Generate subdir names
-        self.gate_path_jobs = os.path.join(self.gate_path_shared, 'jobs')
-        self.gate_path_exit = os.path.join(self.gate_path_shared, 'exit')
-        self.gate_path_waiting = os.path.join(self.gate_path_shared, 'waiting')
-        self.gate_path_queued = os.path.join(self.gate_path_shared, 'queued')
-        self.gate_path_running = os.path.join(self.gate_path_shared, 'running')
-        self.gate_path_done = os.path.join(self.gate_path_shared, 'done')
-        self.gate_path_failed = os.path.join(self.gate_path_shared, 'failed')
-        self.gate_path_aborted = os.path.join(self.gate_path_shared, 'aborted')
-        self.gate_path_killed = os.path.join(self.gate_path_shared, 'killed')
-        self.gate_path_removed = os.path.join(self.gate_path_shared, 'removed')
-        self.gate_path = {
-            "waiting": self.gate_path_waiting,
-            "queued": self.gate_path_queued,
-            "running": self.gate_path_running,
-            "done": self.gate_path_done,
-            "failed": self.gate_path_failed,
-            "aborted": self.gate_path_aborted,
-            "killed": self.gate_path_killed,
-            "removed": self.gate_path_removed
-        }
-
         log(VERBOSE, self)
 
 

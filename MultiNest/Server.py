@@ -3,21 +3,18 @@
 import requests
 import flask
 import logging
-
-try:
-    import json
-except:
-    import simplejson as json
+import json
 
 from logging import debug, error, warning
 
+from MultiNest.Config import conf
+
 logging.basicConfig(level=logging.DEBUG)
 
-gw_url = "https://app-gw.cis.gov.pl/api-devel"
 
 def submit(payload):
     payload['service'] = "MultiNest"
-    url = gw_url + "/submit"
+    url = conf.gw_url + "/submit"
     headers = {'content-type': 'application/json'}
     try:
         # Set verify=False as we use self signed cert. With CA signed cert add
@@ -48,45 +45,43 @@ def status():
     )
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = gw_url + "/status/" + _jid
+        url = conf.gw_url + "/status/" + _jid
         r = requests.get(url, verify=False)
-        if \
-            r.text.startswith('Waiting') or \
-            r.text.startswith('Queued'):
-                _st = 2
-                _type = 'queued'
-        elif \
-            r.text.startswith('Running'):
-                _st = 3
-                _type = 'running'
-        elif \
-            r.text.startswith('Done'):
-                _st = 4
-                _type = 'done'
+        if r.text.startswith('Waiting') or \
+           r.text.startswith('Queued'):
+            _st = 2
+            _type = 'queued'
+        elif r.text.startswith('Running'):
+            _st = 3
+            _type = 'running'
+        elif r.text.startswith('Done'):
+            _st = 4
+            _type = 'done'
         else:
             _st = 5
             _type = 'error'
 
         _result = {
-            'state':_st, 'type':_type, 'desc':_states[_st-1], 'msg':r.text
+            'state': _st, 'type': _type, 'desc': _states[_st-1], 'msg': r.text
         }
         return _result
 
-    _result = {'state':1, 'type':'ready', 'desc':_states[0], 'msg':''}
+    _result = {'state': 1, 'type': 'ready', 'desc': _states[0], 'msg': ''}
     return _result
 
 
 def progress():
-    _result = {'job_output':'Waiting ...'}
+    _result = {'job_output': 'Waiting ...'}
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = gw_url + "/progress/" + _jid
+        url = conf.gw_url + "/progress/" + _jid
         r = requests.get(url, verify=False)
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
         _result['job_output'] = r.text
     else:
-        flask.flash(u"Brak aktywnego zadania: nie mogę wyświetlić stanu obliczeń", "error")
+        flask.flash(u"Brak aktywnego zadania: nie mogę wyświetlić stanu "
+                    u"obliczeń", "error")
         _result['job_output'] = 'Empty Session'
 
     return _result
@@ -95,7 +90,7 @@ def progress():
 def output():
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
-        url = gw_url + "/output/" + _jid
+        url = conf.gw_url + "/output/" + _jid
         r = requests.get(url, verify=False)
         if r.text.startswith('Error'):
             flask.flash(r.text)
@@ -107,5 +102,6 @@ def output():
                                          url=r.text,
                                          state=_state)
 
-    flask.flash(u"Brak zakończonego zadania: nie mogę wyświetlić wyników", "error")
+    flask.flash(u"Brak zakończonego zadania: nie mogę wyświetlić wyników",
+                "error")
     return flask.redirect(flask.url_for('index'))
