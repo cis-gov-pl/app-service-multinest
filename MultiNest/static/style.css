@@ -209,13 +209,20 @@ a:hover {
 	border: none;
 }
 
-#menu a:hover {
+#menu #nav-index a:hover,
+#menu #nav-submit a:hover,
+#menu #nav-monitor a:hover,
+#menu #nav-output a:hover {
     transition: all 0.3s ease-in 0s;
     background: none repeat scroll 0% 0% rgb(17, 112, 181);
 	text-decoration: none;
 }
 
-#menu .current_page_item a {
+body.index #nav-index a,
+body.submit #nav-submit a,
+body.monitor #nav-monitor a,
+body.output #nav-output a {
+    background: none repeat scroll 0% 0% rgb(5, 30, 80);
 }
 
 /* Page */

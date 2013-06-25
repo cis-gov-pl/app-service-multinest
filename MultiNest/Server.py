@@ -13,7 +13,7 @@ from logging import debug, error, warning
 
 logging.basicConfig(level=logging.DEBUG)
 
-gw_url = "https://app-gw.cis.gov.pl/api"
+gw_url = "https://app-gw.cis.gov.pl/api-devel"
 
 def submit(payload):
     payload['service'] = "MultiNest"
@@ -84,10 +84,10 @@ def progress():
         r = requests.get(url, verify=False)
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
-        else:
-            _result['job_output'] = r.text
+        _result['job_output'] = r.text
     else:
-        flask.flash(u"Brak zadań: nie mogę wyświetlić stanu obliczeń", "error")
+        flask.flash(u"Brak aktywnego zadania: nie mogę wyświetlić stanu obliczeń", "error")
+        _result['job_output'] = 'Empty Session'
 
     return _result
 
