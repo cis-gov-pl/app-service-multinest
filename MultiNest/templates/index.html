@@ -31,7 +31,7 @@ zagnieżdżonego (<a
         referencyjną).
         </p>
     </div>
-    <h2 class="title">Opis</h2>
+    <h2 class="title">Instrukcja</h2>
     <div style="clear: both;">&nbsp;</div>
     <div class="entry">
         <p>
@@ -86,9 +86,10 @@ zagnieżdżonego (<a
         do zakładki <a href="{{ url_for('monitor') }}">Monitor obliczeń</a>. Po
         prawej stronie wyświetlony zostanie aktualny status zadania
         obliczeniowego. W głównej części okna wyświetlane są komunikaty
-        zgłaszane przez działający program MultiNest. Po pomyślnym zakończeniu
-        obliczeń status zadania zmieni się na "Obliczenia zakończone" (w
-        kolorze zielonym).
+        zgłaszane przez działający program MultiNest. Zarówno status zadania
+        jak i jego komunikaty są aktualizowane automatycznie. Po pomyślnym
+        zakończeniu obliczeń status zadania zmieni się na "Obliczenia
+        zakończone" (w kolorze zielonym).
         </p>
         <p>
         Gdy obliczenia zostały pomyślnie zakończone możemy przejść do zakładki
@@ -98,9 +99,19 @@ zagnieżdżonego (<a
         wygenerowanych maksimów (czerwone puste elipsy). Rozmiar elips
         odpowiada wygenerowanej sigmie funkcji gaussa. Niebieskie elipsy
         określają maksima znalezione przez algorytm MultiNest, ich pozycja oraz
-        rozmiar odpowiadają wartością uzyskanym w procesie minimalizacji.
+        rozmiar odpowiadają wartościom uzyskanym w procesie minimalizacji.
         Wykres dolny prezentuje rozkład punktów które zostały wykorzystane w
         trakcie działania algorytmu MultiNest.
+        </p>
+        <p>
+        Aplikacja przechowuje jedynie informacje o aktualnym zadaniu. Możliwe
+        jest krótkotrwałem zachowanie adresów url do plików graficznych
+        prezentujących wyniki. Pliki te są automatycznie usuwane po upływie 24
+        godzin.
+        </p>
+        <p>
+        Komentarze oraz informacje o błędach proszę przesyłać na adres
+        konrad.klimaszewski _at_ ncbj.gov.pl.
         </p>
     </div>
 </div>
