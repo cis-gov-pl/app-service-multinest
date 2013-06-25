@@ -25,7 +25,7 @@ Released   : 20120307
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 </head>
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
 <div id="wrapper">
     <div id="splash"><a href="http://www.cis.gov.pl">
             <img alt="CIŚ" src="{{ url_for('static', filename='CIS.jpg') }}">
@@ -37,10 +37,10 @@ Released   : 20120307
             </div>
 			<div id="menu">
 				<ul>
-                    <li><a href="{{ url_for('index') }}">Opis</a></li>
-                    <li><a href="{{ url_for('submit') }}">Dane wejściowe</a></li>
-                    <li><a href="{{ url_for('monitor') }}">Monitor obliczeń</a></li>
-                    <li><a href="{{ url_for('output') }}">Wyniki</a></li>
+                    <li id="nav-index"><a href="{{ url_for('index') }}">Opis</a></li>
+                    <li id="nav-submit"><a href="{{ url_for('submit') }}">Dane wejściowe</a></li>
+                    <li id="nav-monitor"><a href="{{ url_for('monitor') }}">Monitor obliczeń</a></li>
+                    <li id="nav-output"><a href="{{ url_for('output') }}">Wyniki</a></li>
 				</ul>
             </div>
 		</div>

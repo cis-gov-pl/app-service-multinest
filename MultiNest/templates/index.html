@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% block bodyclass %}index{% endblock %}
 {% block content %}
 <div class="post">
     <h2 class="title">Opis</h2>
@@ -21,6 +22,96 @@ likelihood. MultiNest jest implementacją wielo-modowego algorytmu próbkowania
 zagnieżdżonego (<a
     href="http://en.wikipedia.org/wiki/Nested_sampling_algorithm"
     >nested sampling</a>).
+        </p>
+        <p>
+        Aplikacja CIŚ MultiNest prezentuje działanie algorytmu MultiNest w
+        zadaniu wyszukiwania wielu maksimów funkcji w przestrzeni dwu
+        wymiarowej. Drugim zadaniem aplikacji jest prezentacja możliwości
+        infrastruktury aplikacji internetowych CIŚ (jest implementacją
+        referencyjną).
+        </p>
+    </div>
+    <h2 class="title">Instrukcja</h2>
+    <div style="clear: both;">&nbsp;</div>
+    <div class="entry">
+        <p>
+        W zakładce <a href="{{ url_for('submit') }}">Dane wejściowe</a>
+        definiujemy parametry zadania obliczeniowego. Zadanie składa się z
+        dwóch etapów. W pierszym losowo zostają rozmieszczone maksima funkcji w
+        postaci dwu wymiarowych funckji gaussa. Użytkownik określa następujące
+        parametry:
+        </p>
+        <ul>
+            <li>Rozmiar przestrzeni - dostępny obszar przestrzeni fazowej
+            badanej funckji (X, Y) w zakresie od 0 do 10000 (liczba
+            całkowita)</li>
+            <li>Liczba maksimów - krotność maksimów jest losowa, definiujemy
+            minimalną i maksymalną wartość całkowitą z zakresu od 1 do
+            1000</li>
+            <li>Szerokość maksimów - sigma funkcji gaussa jest losowa i
+            niezależna dla każdego wymiaru przestrzeni fazowej (X, Y).
+            Definiujemy minimalną i maksywalną wartość rzeczywistą z zakresu od
+            0 do 100
+        </ul>
+        <p>
+        Drugim etapem obliczeń jest poszukiwanie maksimów z wykorzystaniem
+        algorytmu MultiNest. Użytkownik może określić następujące parametry
+        zarządzające zachowaniem algorytmu:
+        </p>
+        <ul>
+            <li>Live points - liczba aktywnych punktów w przestrzeni fazowej.
+            Algorytm korzysta z pewnej puli aktywnych punktów dla których
+            wyznaczana jest wartość funckji. Liczba niezbędnych aktywnych
+            punktów jest tym większa im więcej wymiarów ma rozpatrywany
+            problem.</li>
+            <li>Max Modes - algorytm poszukuje maksimów grupując przebadane
+            punkty w klastry. Parametr Max Modes określa maksymalną liczbę
+            klastrów jaką algorytm "pamięta".</li>
+            <li>Sampling Efficiency (e) - parametr ten określa współczynnik
+            (1/e) o jaki zostanie powiększona objętość przestrzeni fazowej z
+            jakiej losowane są w kolejnych krokach nowe aktywne punkty. Wartość
+            1 oznacza że zawsze punkty losowane są z obszaru iso-likelihood
+            korzystne w problemach estymacji parametrycznej (sugerowana wartość
+            to 0.8). Gdy interesuje nas jedynie kształt funckji posterior
+            możemy ustawić e&lt;1 co pozwoli na uzyskanie wyniku w mniejszej
+            liczbie iteracji (sugerowana wartość 0.3).</li>
+            <li>Evidence Tolerance - Kryterium zatrzymania. Algorytm zakończy
+            działanie gdy zmiany "Evidence" w kolejnych krokach są mniejsze od
+            podanej wartości. Dobrym wyborem jest 1/2.</li>
+        </ul>
+        <p>
+        Po zdefiniowaniu parametrów zadania obliczeniowego uruchamiamy je
+        przyciskiem "Wyślij". Zadanie zostanie wysłane do systemu kolejkowego
+        klastra obliczeniowego CIŚ. Przeglądarka automatycznie przeniesie nas
+        do zakładki <a href="{{ url_for('monitor') }}">Monitor obliczeń</a>. Po
+        prawej stronie wyświetlony zostanie aktualny status zadania
+        obliczeniowego. W głównej części okna wyświetlane są komunikaty
+        zgłaszane przez działający program MultiNest. Zarówno status zadania
+        jak i jego komunikaty są aktualizowane automatycznie. Po pomyślnym
+        zakończeniu obliczeń status zadania zmieni się na "Obliczenia
+        zakończone" (w kolorze zielonym).
+        </p>
+        <p>
+        Gdy obliczenia zostały pomyślnie zakończone możemy przejść do zakładki
+        <a href"{{ url_for('output') }}">Wyniki</a>. W zkaładce tej wyniki
+        obliczeń prezentowane są w postaci graficznej. Wykres górny pokazuje
+        wartość wygenerowanej losowej funckji f(x, y) wraz z zaznaczoną pozycją
+        wygenerowanych maksimów (czerwone puste elipsy). Rozmiar elips
+        odpowiada wygenerowanej sigmie funkcji gaussa. Niebieskie elipsy
+        określają maksima znalezione przez algorytm MultiNest, ich pozycja oraz
+        rozmiar odpowiadają wartościom uzyskanym w procesie minimalizacji.
+        Wykres dolny prezentuje rozkład punktów które zostały wykorzystane w
+        trakcie działania algorytmu MultiNest.
+        </p>
+        <p>
+        Aplikacja przechowuje jedynie informacje o aktualnym zadaniu. Możliwe
+        jest krótkotrwałem zachowanie adresów url do plików graficznych
+        prezentujących wyniki. Pliki te są automatycznie usuwane po upływie 24
+        godzin.
+        </p>
+        <p>
+        Komentarze oraz informacje o błędach proszę przesyłać na adres
+        konrad.klimaszewski&nbsp;(at)&nbsp;ncbj.gov.pl.
         </p>
     </div>
 </div>
