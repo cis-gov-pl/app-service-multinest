@@ -31,6 +31,8 @@ def progress():
 def monitor():
     _state = Server.status()
     _progress = Server.progress()
+    if _progress['job_output'] == 'Empty Session':
+        return redirect(url_for('index'))
     _progress['job_output'] = _progress['job_output'].replace('\n', '<br/>')
     return render_template("monitor.html", state=_state, progress=_progress)
 
