@@ -1,6 +1,13 @@
 # -*- coding: UTF-8 -*-
 
-from flask.ext.wtf import Form, IntegerField, FloatField, validators
+from flask.ext.wtf import \
+        Form, \
+        IntegerField, \
+        FloatField, \
+        RadioField, \
+        BooleanField, \
+        TextAreaField, \
+        validators
 
 
 class SubmitForm(Form):
@@ -58,6 +65,17 @@ class SubmitForm(Form):
         ],
         default=6,
     )
+    use_sets = BooleanField(u'Użyj predefiniowanego zestawu zamiast przypadku losowego', default = False)
+    sets = RadioField('Sets',
+                      choices=[
+                          ('set_x1',u'1 Maksimum'),
+                          ('set_x10',u'10 Maksimów'),
+                          ('set_x100',u'100 Maksimów'),
+                          ('user_set',u'Maksima zdefiniowane przez użytkownika'),
+                      ],
+                      default = 'set_x1'
+                      )
+    user_set = TextAreaField(u'')
     n_live_points = IntegerField(
         'Live Points', [
             validators.NumberRange(
