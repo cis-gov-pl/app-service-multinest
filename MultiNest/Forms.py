@@ -1,6 +1,13 @@
 # -*- coding: UTF-8 -*-
 
-from flask.ext.wtf import Form, IntegerField, FloatField, validators
+from flask.ext.wtf import \
+        Form, \
+        IntegerField, \
+        FloatField, \
+        RadioField, \
+        BooleanField, \
+        TextAreaField, \
+        validators
 
 
 class SubmitForm(Form):
@@ -45,7 +52,7 @@ class SubmitForm(Form):
         ],
         default=10,
     )
-    #:Minimum sigma of a node (integer field).
+    #:Minimum sigma of a node (float field).
     sigma_min = FloatField(
         'Min', [
             validators.NumberRange(
@@ -55,7 +62,7 @@ class SubmitForm(Form):
         ],
         default=1,
     )
-    #:Maximum sigma of a node (integer field).
+    #:Maximum sigma of a node (float field).
     sigma_max = FloatField(
         'Max', [
             validators.NumberRange(
@@ -65,6 +72,20 @@ class SubmitForm(Form):
         ],
         default=6,
     )
+    #:Has user requested to use predefined data set (bool field)?
+    use_sets = BooleanField(u'Użyj predefiniowanego zestawu zamiast przypadku losowego', default = False)
+    #:Predefined data sets (radio field).
+    sets = RadioField('Sets',
+                      choices=[
+                          ('set_x1',u'1 Maksimum'),
+                          ('set_x10',u'10 Maksimów'),
+                          ('set_x100',u'100 Maksimów'),
+                          ('user_set',u'Maksima zdefiniowane przez użytkownika'),
+                      ],
+                      default = 'set_x1'
+                      )
+    #:User set (text field)
+    user_set = TextAreaField(u'')
     #:Number of live points for MultiNest to use (integer field).
     n_live_points = IntegerField(
         'Live Points', [
@@ -85,6 +106,7 @@ class SubmitForm(Form):
         ],
         default=100,
     )
+    #:MultiNest sampling efficiency (float field)
     sampling_efficiency = FloatField(
         'Sampling Efficiency', [
             validators.NumberRange(
@@ -94,6 +116,7 @@ class SubmitForm(Form):
         ],
         default=0.8,
     )
+    #:MultiNest evidence tolerance (float field)
     evidence_tolerance = FloatField(
         'Evidence Tolerance', [
             validators.NumberRange(

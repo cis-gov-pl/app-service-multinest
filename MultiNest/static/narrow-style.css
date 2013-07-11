@@ -10,7 +10,7 @@ body {
 	background: #FFFFFF;
 	font-family: 'Arial';
 	font-size: 14px;
-	min-width: 960px;
+/*	min-width: 960px;*/
 	margin: 0px;
 	padding: 0px;
 }
@@ -67,7 +67,6 @@ a:hover {
 
 .filler {
     float: left;
-	margin: 0px auto;
 }
 
 .righty {
@@ -86,11 +85,11 @@ a:hover {
 /* Logo */
 
 #logo {
-	float: left;
-	width: 320px;
+/*	float: left;*/
+/*	width: 320px;*/
 	height: 84px;
-	margin: 0px 20px 0px 30px;
-	padding: 0px;
+/*    margin: 0px 20px 0px 30px;*/
+	padding: 0px 20px 0px 20px;
 	color: #FFFFFF;
 	background-color: #000000;
 }
@@ -133,7 +132,7 @@ a:hover {
 /* Splash */
 
 #splash {
-	width: 960px;
+/*	width: 960px;*/
 	margin: 0px auto;
     height: 120px;
     padding: 0;
@@ -186,7 +185,7 @@ a:hover {
 
 #menu {
 	float: left;
-	height: 64px;
+/*	height: 64px;*/
 	margin: 0 auto;
 	padding: 0px;
 	background: url(bg_menu.gif) repeat-x 0px 20px;
@@ -204,6 +203,7 @@ a:hover {
 #menu li {
 	float: left;
 	margin-top: 20px;
+	background: url(bg_menu.gif) repeat-x;
 }
 
 #menu a {
@@ -241,7 +241,7 @@ body.output #nav-output a {
 /* Page */
 
 #page {
-	width: 940px;
+/*	width: 940px;*/
 	margin: 0px auto;
 	padding: 0px;
 }
@@ -249,7 +249,9 @@ body.output #nav-output a {
 /* Content */
 
 #content {
-	padding: 0px;
+    float: left;
+	padding: 5px;
+	clear: both;
 }
 
 .post {
@@ -377,8 +379,8 @@ body.output #nav-output a {
 /* Sidebar */
 
 #sidebar {
-	float: right;
-	width: 280px;
+/*	float: right;
+	width: 280px;*/
 	margin: 0px;
 	padding: 0px 0px 0px 20px;
 }
@@ -390,6 +392,8 @@ body.output #nav-output a {
 }
 
 #sidebar li {
+	width: 150px;
+	float: left;
     margin: 5px 10px;
     padding: 5px;
     background: none repeat scroll 0% 0% rgb(159, 197, 225);
@@ -435,6 +439,8 @@ body.output #nav-output a {
 }
 
 #status {
+	width: 150px;
+	float: left;
     margin: 5px 10px;
     padding: 5px;
 }
@@ -460,6 +466,8 @@ body.output #nav-output a {
 }
 
 #messages {
+	width: 150px;
+	float: left;
     margin: 5px 10px;
     padding: 5px;
     display: hidden;
@@ -521,7 +529,7 @@ body.output #nav-output a {
 }
 
 #footer {
-	width: 960px;
+/*	width: 960px;*/
 	margin: 0px auto;
 /*	height: 50px;*/
 	margin: 0 auto;

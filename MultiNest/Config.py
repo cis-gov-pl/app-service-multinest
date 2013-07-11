@@ -1,6 +1,10 @@
 # -*- coding: UTF-8 -*-
+"""
+Global configuration for MultiNest.
+"""
 
 import os
+import re
 import json
 
 from logging import \
@@ -36,7 +40,7 @@ class Config(dict):
         self.config_file = None  #: Config file name
         self.log_level = 'INFO'  #: Logging level
         self.log_output = None  #: Log output file name
-        self.gw_url = "http://app-gw.cis.gov.pl/api" #: URL of AppGateway API
+        self.gw_url = "http://localhost:5000" #: URL of AppGateway API
 
     def load(self, conf_name=None):
         """

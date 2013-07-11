@@ -1,0 +1,26 @@
+{
+    // ****************
+    // Logging settings
+    // ****************
+    //
+    // Logging level (default: INFO)
+    //"log_level" : "INFO",
+    //
+    // Log output file name (default: None)
+    //"log_output" : "/tmp/CISAppGateway.log",
+    //
+    // ****************
+    // Gateway settings
+    // ****************
+    //
+    // URL to AppGateway API
+    // (default: http://localhost:5000/)
+    "gw_url" : "http:\/\/app-gw.cis.gov.pl/api-devel",
+    //
+    // ***
+    // END
+    // ***
+    //
+    // Dummy item just to make json parser always happy :-D
+    "DUMMY" : 0
+}
