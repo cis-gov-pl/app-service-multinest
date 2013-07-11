@@ -16,23 +16,31 @@ Released   : 20120307
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>CIŚ MultiNest Webservice</title>
+<!-- Narrow CSS for small screens -->
 <link href="{{ url_for('static', filename='narrow-style.css') }}"
     rel="stylesheet" type="text/css" media="screen and (max-width: 900px)" />
+<!-- Standard CSS for large screens -->
 <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"
     type="text/css" media="screen and (min-width: 901px)" />
+<!-- Refresh the status every 30 scenods for browser without javascript -->
 <noscript>
     <meta http-equiv="Refresh" id="refresh" content="30"/>
 </noscript>
+<!-- Store document root for javascript to utilise -->
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 </head>
+<!-- Templates that extend this can specify CSS class of body element. This is
+used to indicate in the menu which page is currently displayed. -->
 <body class="{% block bodyclass %}{% endblock %}">
 <div id="wrapper">
+    <!-- Splash on top of the page with CIS logo -->
     <div id="splash"><a href="http://www.cis.gov.pl">
             <img alt="CIŚ" src="{{ url_for('static', filename='CIS.jpg') }}">
     </a></div>
-	<div id="wrapper2">
+    <div id="wrapper2">
+        <!-- Header with MultiNest logo and menu -->
 		<div id="header" class="container">
             <div id="logo">
                 <h1><a href="{{ url_for('index') }}">MultiNest</a></h1>
@@ -50,24 +58,30 @@ Released   : 20120307
 		<div id="page">
             <div id="sidebar">
                 <h2>Status Aplikacji</h2>
+                <!-- Status boxes: first with status type, second with status message -->
                 <div id="status" class={{state.type}}>{{state.desc}}</div>
                 <div id="messages" class={{state.type}}>{{state.msg}}</div>
+<!-- Flash messege boxes for: errors and info messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     <ul class=flashes>
     {% for category, message in messages %}
+    <!-- Flash category corresponds to CSS classes -->
     <li class="{{ category }}">{{ message }}</li>
     {% endfor %}
     </ul>
   {% endif %}
-{% endwith %}
+  {% endwith %}
+<!-- End flash boxes -->
             </div>
 			<!-- end #sidebar -->
-			<div id="content">
+            <div id="content">
+<!-- Child templates should fill this one -->
 {% block content %}
 {% endblock %}
 			</div>
             <!-- end #content -->
+            <!-- Clear floats for the footer -->
 			<div style="clear: both;">&nbsp;</div>
 		</div>
 		<!-- end #page -->
@@ -76,6 +90,7 @@ Released   : 20120307
 <div id="footer-content">
 	<div id="footer">
     <div id="footer_line"></div>
+    <!-- Floating EU logos -->
     <img height="109px" src="{{ url_for('static', filename='unia-left.jpg') }}" class="lefty"/>
     <div class="filler">&nbsp;</div>
     <img height="109px" src="{{ url_for('static', filename='unia-right.jpg') }}" class="righty"/>
@@ -85,16 +100,20 @@ Released   : 20120307
 </div>
 </div>
 <!-- end #footer -->
+<!-- jQuery -->
 <script type=text/javascript src="{{
-  url_for('static', filename='jquery.js') }}"></script>
+    url_for('static', filename='jquery.js') }}"></script>
+<!-- Our custom status update js -->
 <script type=text/javascript src="{{
-  url_for('static', filename='update_status.js') }}"></script>
+    url_for('static', filename='update_status.js') }}"></script>
+<!-- jQuery-UI for tabbed interfaces -->
 <script type=text/javascript src="{{
   url_for('static', filename='jquery-ui.js') }}"></script>
+<!-- FirebugLite console.log -->
 <!--
-FirebugLite console.log
 <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js#startOpened"></script>
 -->
+<!-- Child templates can add their own scripts -->
 {% block scripts %}
 {% endblock %}
 </body>

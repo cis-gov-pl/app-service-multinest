@@ -5,6 +5,7 @@
     <h2 class="title">Komunikaty</h2>
     <div style="clear: both;">&nbsp;</div>
     <div class="entry">
+        <!-- Display the progress output of the job -->
         <div id="job_output">{{progress.job_output|safe}}</div>
     </div>
 </div>
@@ -13,6 +14,7 @@
 -->
 {% endblock %}
 {% block scripts %}
+<!-- Load script that updates progress window -->
 <script type=text/javascript src="{{
   url_for('static', filename='update_monitor.js') }}"></script>
 {% endblock %}

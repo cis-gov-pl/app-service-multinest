@@ -13,8 +13,16 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def submit(payload):
+    """
+    Submit MultiNest job to the AppGateway.
+
+    :param payload: dict with job parameters to be passed in JSON format to
+                    AppGateway.
+    """
+
+    # Rewrite payload data required for array variables
     req_data = {
-        'service': "MultiNest",
+        'service': "MultiNest",  #Service name
         'xsize': payload['xsize'],
         'ysize': payload['ysize'],
         'nodes_min': payload['nodes_min'],
@@ -26,9 +34,12 @@ def submit(payload):
         'sampling_efficiency': payload['sampling_efficiency'],
         'evidence_tolerance': payload['evidence_tolerance'],
     }
+    # User requested a predefined set
     if payload['use_sets'] == True:
+        # One of predefined sets
         if payload['sets'] != 'user_set':
             req_data[payload['sets']] = 1
+        # User defined set - rewrite list of points into 4 lists of coordinates
         else:
             try:
                 _user_data = json.loads(payload['user_set'])
@@ -43,16 +54,20 @@ def submit(payload):
 
             for _v in _user_data:
                 if len(_v) < 2:
-                    flask.flash(u"Błędny format danych wejściowych. Każdy punkt musi mieć określone minimum współrzędne x i y.", "error")
+                    flask.flash(u"Błędny format danych wejściowych. Każdy "
+                                u"punkt musi mieć określone minimum "
+                                u"współrzędne x i y.", "error")
                     return flask.redirect(flask.url_for('submit'))
                 _x.append(_v[0])
                 _y.append(_v[1])
+                # Allow for point definitions that consist of coordinates only.
+                # The sigmas will be set to a deafoult of 3.0.
                 if len(_v) < 3:
-                    _xsig.append(3)
+                    _xsig.append(3.0)
                 else:
                     _xsig.append(_v[2])
                 if len(_v) < 4:
-                    _ysig.append(3)
+                    _ysig.append(3.0)
                 else:
                     _ysig.append(_v[3])
 
@@ -63,6 +78,7 @@ def submit(payload):
 
     debug("Will submit request: %s" % req_data)
     url = conf.gw_url + "/submit"
+    # Header has to define payload data type "application/json"
     headers = {'content-type': 'application/json'}
     try:
         # Set verify=False as we use self signed cert. With CA signed cert add
@@ -70,20 +86,29 @@ def submit(payload):
         r = requests.post(url, data=json.dumps(req_data), headers=headers,
                           verify=False)
     except Exception as e:
+        # Flash an error message
         flask.flash(u"Brak połączenia z serwerem aplikacji: %s" % e, "error")
+        # Render main page
         return flask.redirect(flask.url_for('index'))
 
+    # AppGateway should return job ID which starts with service name
     if r.text.startswith('MultiNest'):
         flask.flash(u"Zadanie wysłane pomyślnie", "success")
+        # Lets set a cookie with the job ID. For that we have to generate the
+        # resopnse by hand. While at it lets redirect user to the monitor page.
         resp = flask.make_response(flask.redirect(flask.url_for('monitor')))
         resp.set_cookie('CISMultiNestJobID', r.text)
         return resp
 
+    # We did not recieve job ID. Flash the AppGateway response as an error to
+    # the user on the main page.
     flask.flash(r.text, "error")
     return flask.redirect(flask.url_for('index'))
 
 
 def status():
+    """Query the AppGateway for the job status."""
+    # Polish state names
     _states = (
         u'Oczekuję na zadania',
         u'Zadanie oczekuje w kolejce',
@@ -91,9 +116,14 @@ def status():
         u'Obliczenia zakończone',
         u'Błąd',
     )
+    # Job ID should be stored in the users browser as a cookie. Retrive it.
     _jid = flask.request.cookies.get('CISMultiNestJobID')
+    # Job ID recieved
     if _jid is not None:
+        # Query the AppGateway
         url = conf.gw_url + "/status/" + _jid
+        # Set verify to false for now as AppGateway is running with self-signed
+        # certificate
         r = requests.get(url, verify=False)
         if r.text.startswith('Waiting') or \
            r.text.startswith('Queued'):
@@ -109,6 +139,12 @@ def status():
             _st = 5
             _type = 'error'
 
+        # Build a result dictionary that will be parsed by client JavaScript
+        # state - defines numeric types of the state - used javascript to
+        #         identify active and finished states
+        # type - defines text types of the state - used by CSS for visual id
+        # desc - state description
+        # msg - message from AppGateway
         _result = {
             'state': _st, 'type': _type, 'desc': _states[_st-1], 'msg': r.text
         }
@@ -119,31 +155,43 @@ def status():
 
 
 def progress():
+    """Query AppGateway for job progress."""
+    # Standard output when progress is not ready
     _result = {'job_output': 'Waiting ...'}
+    # Get job ID from browser cookie
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
+        # Query AppGateway
         url = conf.gw_url + "/progress/" + _jid
         r = requests.get(url, verify=False)
+        # We got an error flash it to the user
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
+        # No error - update the output
         _result['job_output'] = r.text
     else:
         flask.flash(u"Brak aktywnego zadania: nie mogę wyświetlić stanu "
                     u"obliczeń", "error")
+        # Send "Empty Session" if no job ID is stored in the user browser
         _result['job_output'] = 'Empty Session'
 
     return _result
 
 
 def output():
+    """Query AppGateway for the job results"""
+    # Get job ID from browser cookie
     _jid = flask.request.cookies.get('CISMultiNestJobID')
     if _jid is not None:
+        # Query AppGateway
         url = conf.gw_url + "/output/" + _jid
         r = requests.get(url, verify=False)
+        # We got an error flash it to the user
         if r.text.startswith('Error'):
             flask.flash(r.text)
             return flask.redirect(flask.url_for('index'))
         else:
+        # No error render the output results
             debug(r.text)
             _state = status()
             return flask.render_template("output.html",

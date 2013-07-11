@@ -10,6 +10,8 @@ body {
 	background: #FFFFFF;
 	font-family: 'Arial';
 	font-size: 14px;
+    /* Layout for 960px with white sidebands. For narrower screens the
+     * narrow-style.css should be used */
 	min-width: 960px;
 	margin: 0px;
 	padding: 0px;
@@ -61,15 +63,19 @@ a:hover {
 	margin: 0px auto;
 }
 
+/* Class for elements to be positioned on the left */
 .lefty {
     float: left;
 }
 
+/* Class for elements to be positioned on the in the center and fill all
+ * available space */
 .filler {
     float: left;
 	margin: 0px auto;
 }
 
+/* Class for elements to be positioned on the right */
 .righty {
     float: right;
 }
@@ -137,9 +143,6 @@ a:hover {
 	margin: 0px auto;
     height: 120px;
     padding: 0;
-/*    display: block;
-    text-indent: -9999px;
-	background: url(CIS.jpg) no-repeat left top;*/
 	float: center;
 }
 
@@ -222,6 +225,7 @@ a:hover {
 	border: none;
 }
 
+/* Change background of menu items on mouse hover */
 #menu #nav-index a:hover,
 #menu #nav-submit a:hover,
 #menu #nav-monitor a:hover,
@@ -231,6 +235,7 @@ a:hover {
 	text-decoration: none;
 }
 
+/* Change background of menu items for current page based on body class */
 body.index #nav-index a,
 body.submit #nav-submit a,
 body.monitor #nav-monitor a,
@@ -434,10 +439,14 @@ body.output #nav-output a {
 	font-size: 14px;
 }
 
+/* Status boxes */
+
 #status {
     margin: 5px 10px;
     padding: 5px;
 }
+
+/* Each status type has distinct background */
 
 #status.ready {
     background-color: #97c4f0;
@@ -459,11 +468,15 @@ body.output #nav-output a {
     background-color: #e0c0e4;
 }
 
+/* Message boxes */
+
 #messages {
     margin: 5px 10px;
     padding: 5px;
-    display: hidden;
+    display: hidden; /* Hidden by default */
 }
+
+/* Each message type has distinct background */
 
 #messages.ready {
     background-color: #daeeff;

@@ -10,6 +10,7 @@ body {
 	background: #FFFFFF;
 	font-family: 'Arial';
 	font-size: 14px;
+/* No min width in narrow style */
 /*	min-width: 960px;*/
 	margin: 0px;
 	padding: 0px;
@@ -61,14 +62,18 @@ a:hover {
 	margin: 0px auto;
 }
 
+/* Class for elements to be positioned on the left */
 .lefty {
     float: left;
 }
 
+/* Class for elements to be positioned on the in the center and fill all
+ * available space */
 .filler {
     float: left;
 }
 
+/* Class for elements to be positioned on the right */
 .righty {
     float: right;
 }
@@ -85,6 +90,7 @@ a:hover {
 /* Logo */
 
 #logo {
+/* Leave it at center */
 /*	float: left;*/
 /*	width: 320px;*/
 	height: 84px;
@@ -136,9 +142,6 @@ a:hover {
 	margin: 0px auto;
     height: 120px;
     padding: 0;
-/*    display: block;
-    text-indent: -9999px;
-	background: url(CIS.jpg) no-repeat left top;*/
 	float: center;
 }
 
@@ -222,6 +225,7 @@ a:hover {
 	border: none;
 }
 
+/* Change background of menu items on mouse hover */
 #menu #nav-index a:hover,
 #menu #nav-submit a:hover,
 #menu #nav-monitor a:hover,
@@ -231,6 +235,7 @@ a:hover {
 	text-decoration: none;
 }
 
+/* Change background of menu items for current page based on body class */
 body.index #nav-index a,
 body.submit #nav-submit a,
 body.monitor #nav-monitor a,
@@ -379,6 +384,7 @@ body.output #nav-output a {
 /* Sidebar */
 
 #sidebar {
+/* Sidebar will be displayed on top just below menu - no float and width */
 /*	float: right;
 	width: 280px;*/
 	margin: 0px;
@@ -438,12 +444,16 @@ body.output #nav-output a {
 	font-size: 14px;
 }
 
+/* Status boxes */
+
 #status {
 	width: 150px;
 	float: left;
     margin: 5px 10px;
     padding: 5px;
 }
+
+/* Each status type has distinct background */
 
 #status.ready {
     background-color: #97c4f0;
@@ -465,6 +475,8 @@ body.output #nav-output a {
     background-color: #e0c0e4;
 }
 
+/* Message boxes */
+
 #messages {
 	width: 150px;
 	float: left;
@@ -472,6 +484,8 @@ body.output #nav-output a {
     padding: 5px;
     display: hidden;
 }
+
+/* Each message type has distinct background */
 
 #messages.ready {
     background-color: #daeeff;

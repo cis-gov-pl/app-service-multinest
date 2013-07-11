@@ -20,6 +20,7 @@ $(document).ready(function(){
                 // Set new contents - using append as it does not escape
                 // html tags
                 $("#job_output").append(data.job_output.split("\n").join("<br />"));
+                // Scroll to the end of updated contents
                 $("#job_output").scrollTop($("#job_output")[0].scrollHeight);
             });
     };

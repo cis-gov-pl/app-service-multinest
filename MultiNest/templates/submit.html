@@ -7,6 +7,10 @@
     <div class="entry">
         <form action="" method="post" name="function">
             {{form.hidden_tag()}}
+            <!-- Tabbed interface: div with id="tabs" defines what will be
+            converted into tabs. List with links to ids defined as #tabs-N
+            where N is a number. They will form the "tabs" user clicks on. Divs
+            whith such ids will define the content. http://jqueryui.com/tabs -->
             <div id="tabs">
             <ul>
                 <li><a href="#tabs-1">Parametry Symulacji</a></li>
@@ -18,6 +22,7 @@
                 <p>
                 Rozmiar przestrzeni:<br/>
                 {{form.xsize.label}}: {{form.xsize}}
+                <!-- Display validation errors if any -->
                 {% for error in form.errors.xsize %}
                 <span style="color: red;">[{{error}}]</span>
                 {% endfor %}
@@ -62,6 +67,7 @@
                 <em>Użytkownik definiuje maksima jako listę parametrów postaci:</br>
                     [ [x1, y1, sigma_x1, sigma_y1], [x2, y2, sigma_x2, sigma_y2], ... ]</em>
                 </br>
+                <!-- Specify TextArea size as cols x rows -->
                 {{form.user_set(cols="65", rows="4")|safe}}
                 </p>
             </div>
@@ -99,6 +105,7 @@
 -->
 {% endblock %}
 {% block scripts %}
+<!-- Convert the div with id="tabs" into tabbed interface using jQuery-UI -->
 <script>
     $(function() {
         $( "#tabs" ).tabs();
