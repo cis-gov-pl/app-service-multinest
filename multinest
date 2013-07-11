@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Test program. Will start builtin web server on defined port
+
 from MultiNest import app
 
 app.run(port=5001)
