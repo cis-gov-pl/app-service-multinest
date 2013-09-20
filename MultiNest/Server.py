@@ -22,20 +22,12 @@ def submit(payload):
 
     # Rewrite payload data required for array variables
     req_data = {
-        'service': "MultiNest",  #Service name
-        'xsize': payload['xsize'],
-        'ysize': payload['ysize'],
-        'nodes_min': payload['nodes_min'],
-        'nodes_max': payload['nodes_max'],
-        'sigma_min': payload['sigma_min'],
-        'sigma_max': payload['sigma_max'],
-        'n_live_points': payload['n_live_points'],
-        'max_modes': payload['max_modes'],
-        'sampling_efficiency': payload['sampling_efficiency'],
-        'evidence_tolerance': payload['evidence_tolerance'],
+        'service': "MultiNest",  # Service name
+        'api': 1.0,  # API level
+        'input': payload
     }
     # User requested a predefined set
-    if payload['use_sets'] == True:
+    if payload['use_sets']:
         # One of predefined sets
         if payload['sets'] != 'user_set':
             req_data[payload['sets']] = 1
@@ -44,7 +36,8 @@ def submit(payload):
             try:
                 _user_data = json.loads(payload['user_set'])
             except Exception as e:
-                flask.flash(u"Błędny format danych wejściowych: %s" % e, "error")
+                flask.flash(u"Błędny format danych wejściowych: %s" % e,
+                            "error")
                 return flask.redirect(flask.url_for('submit'))
 
             _x = []
