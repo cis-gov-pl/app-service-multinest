@@ -30,7 +30,7 @@ def submit(payload):
     if payload['use_sets']:
         # One of predefined sets
         if payload['sets'] != 'user_set':
-            req_data[payload['sets']] = 1
+            req_data['input'][payload['sets']] = 1
         # User defined set - rewrite list of points into 4 lists of coordinates
         else:
             try:
@@ -64,10 +64,17 @@ def submit(payload):
                 else:
                     _ysig.append(_v[3])
 
-            req_data['node_list_x'] = _x
-            req_data['node_list_y'] = _y
-            req_data['node_list_xsigma'] = _xsig
-            req_data['node_list_ysigma'] = _ysig
+            req_data['input']['node_list_x'] = _x
+            req_data['input']['node_list_y'] = _y
+            req_data['input']['node_list_xsigma'] = _xsig
+            req_data['input']['node_list_ysigma'] = _ysig
+
+    if 'use_sets' in req_data['input'].keys():
+        del req_data['input']['use_sets']
+    if 'sets' in req_data['input'].keys():
+        del req_data['input']['sets']
+    if 'user_set' in req_data['input'].keys():
+        del req_data['input']['user_set']
 
     debug("Will submit request: %s" % req_data)
     url = conf.gw_url + "/submit"
