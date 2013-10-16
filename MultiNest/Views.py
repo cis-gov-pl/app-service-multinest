@@ -70,3 +70,8 @@ def status():
 def output():
     """Return output data URL."""
     return Server.output()
+
+@app.route('/kill')
+def kill():
+    """Kill current running job."""
+    return Server.kill()

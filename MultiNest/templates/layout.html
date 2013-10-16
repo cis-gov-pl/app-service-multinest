@@ -59,6 +59,7 @@ used to indicate in the menu which page is currently displayed. -->
             <div id="sidebar">
                 <h2>Status Aplikacji</h2>
                 <!-- Status boxes: first with status type, second with status message -->
+                <a id="killer" class="button" href="{{ url_for('kill') }}>Zatrzymaj</a>
                 <div id="status" class={{state.type}}>{{state.desc}}</div>
                 <div id="messages" class={{state.type}}>{{state.msg}}</div>
 <!-- Flash messege boxes for: errors and info messages -->
@@ -98,6 +99,12 @@ used to indicate in the menu which page is currently displayed. -->
     <p> Projekt wspófinansowany ze środków Europejskiego Funduszu Rozwoju Regionalnego<br> w ramach Programu Operacyjnego Innowacyjna Gospodarka </p>
     <p>Design by <a href="http://www.freecsstemplates.org">FCT</a> & <a href="http://www.cis.gov.pl">CIŚ</a>.</p>
 </div>
+</div>
+<div id="kill_dialog" title="Zatrzymaj obliczenia?">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        Aktualne zadanie zostanie zatrzymane.
+    </p>
 </div>
 <!-- end #footer -->
 <!-- jQuery -->

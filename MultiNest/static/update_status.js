@@ -38,5 +38,27 @@ $(document).ready(function(){
     //updateStatus();
     // Update job state every 5s
     setInterval(updateStatus, 5000); // 5 * 1000 miliseconds
+
+    $("#kill_dialog").dialog({
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        title: 'Uwaga!',
+        buttons: {
+            'Zatrzymaj': function() {
+                $(this).dialog('close');
+                window.location.href=$SCRIPT_ROOT + '/kill'
+            },
+            'Anuluj': function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+
+    $('#killer').click(function() {
+        $('.dialog').dialog('open');
+        return false;
+    });
 });
 

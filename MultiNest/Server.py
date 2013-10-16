@@ -201,3 +201,25 @@ def output():
     flask.flash(u"Brak zakończonego zadania: nie mogę wyświetlić wyników",
                 "error")
     return flask.redirect(flask.url_for('index'))
+
+
+def kill():
+    """Ask AppGateway to kill the job"""
+    # Get job ID from browser cookie
+    _jid = flask.request.cookies.get('CISMultiNestJobID')
+    if _jid is not None:
+        # Query AppGateway
+        url = conf.gw_url + "/kill/" + _jid
+        r = requests.get(url, verify=False)
+        # We got an error flash it to the user
+        if r.text.startswith('Error'):
+            flask.flash(r.text)
+            return flask.redirect(flask.url_for('index'))
+        else:
+        # No error render the output results
+            debug(r.text)
+            return flask.redirect(flask.url_for('monitor'))
+
+    flask.flash(u"Brak aktualnego zadania: nie mogę wysłać komendy kill",
+                "error")
+    return flask.redirect(flask.url_for('index'))
