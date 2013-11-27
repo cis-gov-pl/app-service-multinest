@@ -475,6 +475,10 @@ body.output #nav-output a {
     background-color: #e0c0e4;
 }
 
+#status.cleanup {
+    background-color: #c0a0c4;
+}
+
 /* Message boxes */
 
 #messages {
@@ -505,6 +509,10 @@ body.output #nav-output a {
 
 #messages.running {
     background-color: #fce0ff;
+}
+
+#messages.cleanup {
+    background-color: #dcc0df;
 }
 
 #sidebar a {

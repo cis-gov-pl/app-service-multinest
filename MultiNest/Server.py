@@ -113,6 +113,7 @@ def status():
         u'Oczekuję na zadania',
         u'Zadanie oczekuje w kolejce',
         u'Obliczenia w toku',
+        u'Finalizacja obliczeń',
         u'Obliczenia zakończone',
         u'Błąd',
     )
@@ -132,11 +133,15 @@ def status():
         elif r.text.startswith('Running'):
             _st = 3
             _type = 'running'
-        elif r.text.startswith('Done'):
+        elif r.text.startswith('Closing') or \
+             r.text.startswith('Cleanup'):
             _st = 4
+            _type = 'cleanup'
+        elif r.text.startswith('Done'):
+            _st = 5
             _type = 'done'
         else:
-            _st = 5
+            _st = 6
             _type = 'error'
 
         # Build a result dictionary that will be parsed by client JavaScript
@@ -218,7 +223,9 @@ def kill():
         else:
         # No error render the output results
             debug(r.text)
-            return flask.redirect(flask.url_for('monitor'))
+            flask.flash(r.text)
+            flask.flash("Zadanie zarzymane")
+            return flask.redirect(flask.url_for('index'))
 
     flask.flash(u"Brak aktualnego zadania: nie mogę wysłać komendy kill",
                 "error")

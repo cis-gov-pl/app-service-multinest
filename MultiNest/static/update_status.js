@@ -7,7 +7,7 @@ var current_state = 0
 $(document).ready(function(){
     function updateStatus() {
         // Perform updates only for jobs in queued or running state
-        if(current_state >= 4) {
+        if(current_state >= 5) {
             return false;
         }
 
@@ -57,7 +57,7 @@ $(document).ready(function(){
 
 
     $('#killer').click(function() {
-        $('.dialog').dialog('open');
+        $('#kill_dialog').dialog('open');
         return false;
     });
 });

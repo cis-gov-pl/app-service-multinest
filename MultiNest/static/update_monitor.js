@@ -8,7 +8,7 @@ $(document).ready(function(){
         // The current_state is set by updateStatus function loaded in
         // layout.html. Check for updates only for jobs that did not finish
         // (states 1-3)
-        if(current_state >= 4) {
+        if(current_state >= 5) {
             return false;
         }
 
