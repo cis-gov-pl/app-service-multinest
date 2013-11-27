@@ -16,6 +16,8 @@ Released   : 20120307
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>CIŚ MultiNest Webservice</title>
+<link href="{{ url_for('static', filename='jquery-ui.css') }}"
+    rel="stylesheet" type="text/css" />
 <!-- Narrow CSS for small screens -->
 <link href="{{ url_for('static', filename='narrow-style.css') }}"
     rel="stylesheet" type="text/css" media="screen and (max-width: 900px)" />
@@ -57,9 +59,9 @@ used to indicate in the menu which page is currently displayed. -->
 		<!-- end #header -->
 		<div id="page">
             <div id="sidebar">
-                <h2>Status Aplikacji</h2>
+                <h2>Status Aplikacji <a id="killer" class="button" href="{{ url_for('kill') }}">Zatrzymaj</a>
+</h2>
                 <!-- Status boxes: first with status type, second with status message -->
-                <a id="killer" class="button" href="{{ url_for('kill') }}>Zatrzymaj</a>
                 <div id="status" class={{state.type}}>{{state.desc}}</div>
                 <div id="messages" class={{state.type}}>{{state.msg}}</div>
 <!-- Flash messege boxes for: errors and info messages -->
