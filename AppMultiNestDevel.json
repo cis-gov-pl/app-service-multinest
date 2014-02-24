@@ -15,7 +15,7 @@
     //
     // URL to AppGateway API
     // (default: http://localhost:5000/)
-    "gw_url" : "http:\/\/app-gw.cis.gov.pl/api-devel",
+    "gw_url" : "https:\/\/app-gw.cis.gov.pl/api-devel",
     //
     // ***
     // END
