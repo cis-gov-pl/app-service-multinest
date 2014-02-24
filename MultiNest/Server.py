@@ -11,6 +11,8 @@ from MultiNest.Config import conf
 
 logging.basicConfig(level=logging.DEBUG)
 
+# Using global session should enable keepalive of connections to the AppGw
+session = requests.Session()
 
 def submit(payload):
     """
@@ -83,8 +85,8 @@ def submit(payload):
     try:
         # Set verify=False as we use self signed cert. With CA signed cert add
         # cafile as value of the verify attribute
-        r = requests.post(url, data=json.dumps(req_data), headers=headers,
-                          verify=False)
+        r = session.post(url, data=json.dumps(req_data), headers=headers,
+                          verify=conf.gw_cert)
     except Exception as e:
         # Flash an error message
         flask.flash(u"Brak połączenia z serwerem aplikacji: %s" % e, "error")
@@ -125,7 +127,7 @@ def status():
         url = conf.gw_url + "/status/" + _jid
         # Set verify to false for now as AppGateway is running with self-signed
         # certificate
-        r = requests.get(url, verify=False)
+        r = session.get(url, verify=conf.gw_cert)
         if r.text.startswith('Waiting') or \
            r.text.startswith('Queued'):
             _st = 2
@@ -168,7 +170,7 @@ def progress():
     if _jid is not None:
         # Query AppGateway
         url = conf.gw_url + "/progress/" + _jid
-        r = requests.get(url, verify=False)
+        r = session.get(url, verify=conf.gw_cert)
         # We got an error flash it to the user
         if r.text.startswith('Error'):
             flask.flash(r.text, 'error')
@@ -190,7 +192,7 @@ def output():
     if _jid is not None:
         # Query AppGateway
         url = conf.gw_url + "/output/" + _jid
-        r = requests.get(url, verify=False)
+        r = session.get(url, verify=conf.gw_cert)
         # We got an error flash it to the user
         if r.text.startswith('Error'):
             flask.flash(r.text)
@@ -215,7 +217,7 @@ def kill():
     if _jid is not None:
         # Query AppGateway
         url = conf.gw_url + "/kill/" + _jid
-        r = requests.get(url, verify=False)
+        r = session.get(url, verify=conf.gw_cert)
         # We got an error flash it to the user
         if r.text.startswith('Error'):
             flask.flash(r.text)

@@ -1,13 +1,22 @@
 # -*- coding: UTF-8 -*-
 
-from flask.ext.wtf import \
-        Form, \
+from flask.ext.wtf import Form
+try:
+    from wtforms.fields import \
         IntegerField, \
         FloatField, \
         RadioField, \
         BooleanField, \
-        TextAreaField, \
-        validators
+        TextAreaField
+    from wtforms import validators
+except:
+    from flask.ext.wtf import \
+        IntegerField, \
+        FloatField, \
+        RadioField, \
+        BooleanField, \
+        TextAreaField
+    from flask.ext.wtf import validators
 
 
 class SubmitForm(Form):

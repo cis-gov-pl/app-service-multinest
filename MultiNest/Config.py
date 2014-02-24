@@ -41,6 +41,7 @@ class Config(dict):
         self.log_level = 'INFO'  #: Logging level
         self.log_output = None  #: Log output file name
         self.gw_url = "http://localhost:5000" #: URL of AppGateway API
+        self.gw_cert = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'private'), 'app-gw.pem')
 
     def load(self, conf_name=None):
         """
